@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Design System - Biblioteca de Componentes UI</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="uikit-container">
+        <header class="uikit-header">
+            <h1>Help Desk - Sistema de Gestión de Incidentes</h1>
+            <p>Biblioteca de Estilos - Sistema Help Desk</p>
+        </header>
+
+        <main>
+            <section class="uikit-section">
+                <h2>1. Botones (Interacciones: Hover y Focus)</h2>
+                <div class="component-gallery">
+                    <button class="btn btn-primary">Botón Primario</button>
+                    <button class="btn btn-secondary">Botón Secundario</button>
+                    <button class="btn btn-danger">Botón de Peligro</button>
+                </div>
+            </section>
+
+            <section class="uikit-section">
+                <h2>2. Elementos de Formulario</h2>
+                <div class="component-gallery">
+                    <div class="form-group">
+                        <label class="form-label" for="txt-ejemplo">Título del Incidente:</label>
+                        <input class="form-control" type="text" id="txt-ejemplo" placeholder="Ej. Falla de conexión interna...">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="select-ejemplo">Categoría de Soporte:</label>
+                        <select class="form-control" id="select-ejemplo">
+                            <option value="red">Redes y Conectividad</option>
+                            <option value="software">Desarrollo de Software</option>
+                            <option value="hardware">Soporte Técnico Hardware</option>
+                        </select>
+                    </div>
+                </div>
+            </section>
+
+            <section class="uikit-section">
+                <h2>3. Alertas / Etiquetas (Badges de Prioridad)</h2>
+                <div class="component-gallery">
+                    <span class="badge badge-alta">Prioridad Alta</span>
+                    <span class="badge badge-media">Prioridad Media</span>
+                    <span class="badge badge-baja">Prioridad Baja</span>
+                </div>
+            </section>
+
+            <section class="uikit-section">
+                <h2>4. Contenedores de Información (Ticket Cards)</h2>
+                <div class="component-gallery">
+                    
+                    <article class="ticket-card ticket-alta">
+                        <div class="ticket-card-header">
+                            <span class="ticket-id">#004</span>
+                            <span class="badge badge-alta">Alta</span>
+                        </div>
+                        <div class="ticket-card-body">
+                            <h3>Falla en Base de Datos Principal</h3>
+                            <p>El Singleton del Gestor de Incidentes está experimentando alta latencia durante las condiciones de carrera concurrentes.</p>
+                        </div>
+                        <div class="ticket-card-footer">
+                            <span>Soporte: A. Zambrano</span>
+                            <span>Hace 5 min</span>
+                        </div>
+                    </article>
+
+                    <article class="ticket-card ticket-media">
+                        <div class="ticket-card-header">
+                            <span class="ticket-id">#005</span>
+                            <span class="badge badge-media">Media</span>
+                        </div>
+                        <div class="ticket-card-body">
+                            <h3>Error de Conexión PC de Escritorio</h3>
+                            <p>El equipo asignado no logra obtener direccionamiento IP dinámico en la VLAN de administración.</p>
+                        </div>
+                        <div class="ticket-card-footer">
+                            <span>Soporte: Técnico N1</span>
+                            <span>Hace 1 hora</span>
+                        </div>
+                    </article>
+
+                    <article class="ticket-card ticket-baja">
+                        <div class="ticket-card-header">
+                            <span class="ticket-id">#006</span>
+                            <span class="badge badge-baja">Baja</span>
+                        </div>
+                        <div class="ticket-card-body">
+                            <h3>Actualización de Servidor Web</h3>
+                            <p>Desplegar la maquetación estructural complementaria y limpiar estilos heredados obsoletos.</p>
+                        </div>
+                        <div class="ticket-card-footer">
+                            <span>Asignado a: Técnico N2</span>
+                            <span>Ayer</span>
+                        </div>
+                    </article>
+
+                </div>
+            </section>
+        </main>
+    </div>
+
+</body>
+</html>
