@@ -1,54 +1,69 @@
-/* Variables globales del sistema */
+/* 1. VARIABLES GLOBALES DEL SISTEMA (Custom Properties) */
+
+/* Pseudo-clase :root que almacena los valores centralizados para escalabilidad */
 :root {
-    --color-primary: #0f2455;       
-    --color-primary-hover: #5575ac;
-    --color-secondary: #4f5150;     
+    /* Paleta cromática corporativa y de interfaz */
+    --color-primary: #0f2455;       /* Azul institucional principal */
+    --color-primary-hover: #5575ac; /* Estado activo/hover para el azul */
+    --color-secondary: #4f5150;     /* Gris neutro para textos complementarios */
     --color-secondary-hover: #8b8b8b;
-    --color-background: #f8f9fa;    
-    --color-text: #212529;          
-    --color-surface: #ffffff;       
+    --color-background: #f8f9fa;    /* Fondo claro de la aplicación */
+    --color-text: #212529;          /* Color principal de la tipografía */
+    --color-surface: #ffffff;       /* Color de fondo para tarjetas y contenedores */
     
-    --color-danger: #dc3545;        
+    /* Variables de semántica de estados y prioridades */
+    --color-danger: #dc3545;        /* Rojo para alertas críticas y prioridad alta */
     --color-danger-hover: #951522;
-    --color-warning: #ffc107;       
-    --color-success: #28a745;       
+    --color-warning: #ffc107;       /* Amarillo para advertencias y prioridad media */
+    --color-success: #28a745;       /* Verde para confirmaciones y prioridad baja */
     
+    /* Configuración de fuentes del sistema nativo */
     --font-base: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    --border-radius: 8px;
-    --border-radius-badge: 20px;
     
+    /* Configuración estructural de bordes y layouts */
+    --border-radius: 8px;           /* Redondeado general de inputs, botones y tarjetas */
+    --border-radius-badge: 20px;     /* Redondeado ovalado estilo píldora para etiquetas */
+    
+    /* Configuración de sombras (Efecto de elevación / Profundidad) */
     --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
     --shadow-md: 0 8px 16px rgba(0, 0, 0, 0.16);
-    --shadow-focus: 0 0 0 3px rgba(0, 86, 179, 0.25);
+    --shadow-focus: 0 0 0 3px rgba(0, 86, 179, 0.25); /* Anillo de accesibilidad para focus */
 }
 
-/* Reset y configuracion del modelo de cajas */
+/* 2. RESET DE ESTILOS Y CONFIGURACIÓN DEL MODELO DE CAJAS (Box Model) */
+
+/* Selector universal para estandarizar el cálculo de dimensiones en la maquetación */
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+    box-sizing: border-box; /* Incluye el padding y bordes dentro del tamaño total del elemento */
+    margin: 0;              /* Remueve márgenes heredados por defecto del navegador */
+    padding: 0;             /* Remueve rellenos heredados por defecto del navegador */
 }
 
+/* Estilos base para el cuerpo del documento */
 body {
     font-family: var(--font-base);
     background-color: var(--color-background);
     color: var(--color-text);
-    line-height: 1.6;
-    padding: 2rem;
+    line-height: 1.6;       /* Espaciado proporcional entre líneas de texto */
+    padding: 2rem;          /* Margen interno para separar el contenido de los bordes de la pantalla */
 }
 
-/* Contenedores de la galeria UI */
+/* 3. MAQUETACIÓN DE CONTENEDORES Y GALERÍAS (Layout Flexbox) */
+
+/* Contenedor adaptativo centrado */
 .uikit-container {
     max-width: 1200px;
-    margin: 0 auto;
+    margin: 0 auto;         /* Centrado horizontal automático */
 }
 
+/* Separador estético para la cabecera */
 .uikit-header {
     margin-bottom: 3rem;
     border-bottom: 2px solid var(--color-secondary);
     padding-bottom: 1rem;
 }
 
+/* Separación proporcional entre secciones de componentes */
 .uikit-section {
     margin-bottom: 3rem;
 }
@@ -58,14 +73,17 @@ body {
     color: var(--color-text); 
 }
 
+/* Distribución fluida de componentes usando Flexbox moderno */
 .component-gallery {
     display: flex;
-    flex-wrap: wrap;
-    gap: 1.5rem;
-    align-items: center;
+    flex-wrap: wrap;        /* Permite que los elementos bajen de línea en pantallas pequeñas */
+    gap: 1.5rem;            /* Espaciado regular y automático entre las cajas hijas */
+    align-items: center;    /* Alineación vertical centrada de los componentes */
 }
 
-/* Componentes: Botones */
+/* 4. ESTILIZADO DE COMPONENTES UI */
+
+/* --- Componente: Botones --- */
 .btn {
     display: inline-block;
     font-weight: 600;
@@ -77,15 +95,18 @@ body {
     padding: 0.375rem 1rem;
     font-size: 1rem;
     border-radius: var(--border-radius);
+    /* Transición suave para cambios interactivos de estado */
     transition: background-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-    cursor: pointer;
+    cursor: pointer;        /* Fuerza el cambio de cursor a puntero indicador de acción */
 }
 
+/* Selector de estado avanzado (:focus) para accesibilidad por teclado */
 .btn:focus {
     outline: none;
-    box-shadow: var(--shadow-focus);
+    box-shadow: var(--shadow-focus); /* Despliega el anillo de enfoque personalizado */
 }
 
+/* Variaciones cromáticas aplicadas mediante clases modificadoras */
 .btn-primary {
     background-color: var(--color-primary);
     color: var(--color-surface);
@@ -113,12 +134,12 @@ body {
     background-color: var(--color-danger-hover);
 }
 
-/* Componentes: Formularios */
+/* --- Componente: Formularios --- */
 .form-group {
     display: flex;
-    flex-direction: column;
+    flex-direction: column; /* Alineación vertical de la etiqueta y el input */
     gap: 0.5rem;
-    min-width: 250px;
+    min-width: 250px;       /* Ancho mínimo para mantener una correcta legibilidad */
 }
 
 .form-label {
@@ -127,11 +148,12 @@ body {
     color: var(--color-text);
 }
 
+/* Estilos para cajas de texto y campos selectores */
 .form-control {
     width: 100%;
     padding: 0.375rem 0.75rem;
     font-size: 1rem;
-    font-family: inherit;
+    font-family: inherit;   /* Hereda la tipografía declarada en el body */
     color: var(--color-text);
     background-color: var(--color-surface);
     border: 1px solid var(--color-secondary);
@@ -139,29 +161,30 @@ body {
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
+/* Selector de interacción al hacer clic o enfocarse en el input */
 .form-control:focus {
     border-color: var(--color-primary);
     outline: none;
     box-shadow: var(--shadow-focus);
 }
 
-/* Componentes: Tarjetas de Tickets */
+/* --- Componente: Tarjetas de Tickets (Contenedores Dinámicos) --- */
 .ticket-card {
     background-color: var(--color-surface);
     border-radius: var(--border-radius);
-    box-shadow: var(--shadow-md);
+    box-shadow: var(--shadow-md);   /* Aplicación de elevación mediante sombras */
     padding: 1.5rem;
     max-width: 400px;
     width: 100%;
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    border-top: 4px solid var(--color-primary);
+    border-top: 4px solid var(--color-primary); /* Borde superior base por defecto */
 }
 
 .ticket-card-header {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-between; /* Separa los extremos: ID a la izquierda, Badge a la derecha */
     align-items: center;
 }
 
@@ -180,6 +203,7 @@ body {
     color: var(--color-secondary-hover);
 }
 
+/* Línea divisoria inferior para separar la auditoría interna */
 .ticket-card-footer {
     display: flex;
     justify-content: space-between;
@@ -189,7 +213,7 @@ body {
     font-size: 0.85rem;
 }
 
-/* Componentes: Etiquetas de Prioridad (Badges) */
+/* --- Componente: Etiquetas de Prioridad (Badges) --- */
 .badge {
     display: inline-block;
     padding: 0.25rem 0.75rem;
@@ -203,20 +227,21 @@ body {
     color: var(--color-surface);
 }
 
+/* Estilos de color contextuales según la prioridad de las etiquetas */
 .badge-alta {
     background-color: var(--color-danger);
 }
 
 .badge-media {
     background-color: var(--color-warning);
-    color: #212529;
+    color: #212529; /* Contraste oscuro para legibilidad sobre color amarillo */
 }
 
 .badge-baja {
     background-color: var(--color-success);
 }
 
-/* Clases modificadoras para el color de las tarjetas segun la prioridad */
+/* --- Clases modificadoras avanzadas para alterar el color de borde de las tarjetas --- */
 .ticket-alta {
     border-top-color: var(--color-danger);
 }
