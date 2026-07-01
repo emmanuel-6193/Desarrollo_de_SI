@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historial de Tickets - Help Desk</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="uikit-container">
+        <header class="uikit-header">
+            <h1>Sistema de Gestión de Incidentes</h1>
+            <p>Historial General de Casos Técnicos</p>
+        </header>
+
+        <nav class="main-nav">
+            <ul class="nav-list">
+                <li><a href="index.html" class="nav-link">Inicio</a></li>
+                <li><a href="reportar.html" class="nav-link">Reportar Incidente</a></li>
+                <li><a href="tickets.html" class="nav-link active">Ver Tickets</a></li>
+            </ul>
+        </nav>
+
+        <main>
+            <section class="uikit-section">
+                <h2>Listado General de Soporte</h2>
+                <p class="section-intro">Estado de los requerimientos técnicos registrados en plataforma:</p>
+                
+                <div class="table-responsive">
+                    <table class="custom-table">
+                        <caption>Registro de Soporte Técnico</caption>
+                        <thead>
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">FECHA</th>
+                                <th scope="col">USUARIO</th>
+                                <th scope="col">ASUNTO</th>
+                                <th scope="col">TIPO</th>
+                                <th scope="col">NIVEL</th>
+                                <th scope="col">TÉCNICO</th>
+                                <th scope="col">ESTADO</th>
+                                <th scope="col">ACCIONES</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="text-bold">#001</td>
+                                <td>01/06/2026</td>
+                                <td>J. Farfán</td>
+                                <td>Falla Red</td>
+                                <td>Redes</td>
+                                <td><span class="badge badge-alta">Alta</span></td>
+                                <td>A. Zambrano</td>
+                                <td><span class="status-open">Abierto</span></td>
+                                <td><button class="btn btn-danger" style="padding: 0.25rem 0.75rem; font-size: 0.85rem;">Cerrar</button></td>
+                            </tr>
+                            <tr>
+                                <td class="text-bold">#002</td>
+                                <td>31/05/2026</td>
+                                <td>M. García</td>
+                                <td>Error PC</td>
+                                <td>Hardware</td>
+                                <td><span class="badge badge-media">Media</span></td>
+                                <td>Soporte N1</td>
+                                <td><span class="status-process">En Proceso</span></td>
+                                <td><button class="btn btn-danger" style="padding: 0.25rem 0.75rem; font-size: 0.85rem;">Cerrar</button></td>
+                            </tr>
+                            <tr>
+                                <td class="text-bold">#003</td>
+                                <td>28/05/2026</td>
+                                <td>Admin</td>
+                                <td>Update SO</td>
+                                <td>Software</td>
+                                <td><span class="badge badge-baja">Baja</span></td>
+                                <td>Soporte N2</td>
+                                <td><span class="status-closed">Cerrado</span></td>
+                                <td><button class="btn btn-danger" style="padding: 0.25rem 0.75rem; font-size: 0.85rem;" disabled>Cerrar</button></td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="9" class="table-summary">
+                                    RESUMEN: 3 incidentes encontrados.
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </section>
+        </main>
+
+        <footer class="app-footer">
+            <p>UTM - Facultad de Ciencias Informáticas / Portoviejo - Manabí</p>
+        </footer>
+    </div>
+
+</body>
+</html>
