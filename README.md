@@ -6,7 +6,7 @@ Esta biblioteca de componentes ha sido diseñada de forma modular bajo estándar
 
 ---
 
-## 🚀 1. Instalación e Integración
+## 1. Instalación e Integración
 
 Para utilizar este sistema de diseño en cualquier nueva página web de la plataforma, asegúrate de cumplir con la siguiente estructura de archivos:
 
