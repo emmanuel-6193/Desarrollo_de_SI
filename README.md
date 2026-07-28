@@ -57,7 +57,7 @@ POST http://localhost:8080/api/tickets — Crear un nuevo ticket de soporte.
 GET http://localhost:8080/api/users — Listar usuarios del sistema.
 
 Estructura del Proyecto
-Plaintext
+
 helpdesk/
 ├── backend/          # Código fuente de la API REST (Spring Boot)
 ├── db/               # Scripts DDL para PostgreSQL (schema.sql)
