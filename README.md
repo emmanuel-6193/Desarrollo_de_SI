@@ -50,6 +50,7 @@ Bash
 La aplicación se iniciará en la URL base: http://localhost:8080
 
 Prueba de Endpoints (API REST)
+
 GET http://localhost:8080/api/tickets — Consultar lista de tickets.
 
 POST http://localhost:8080/api/tickets — Crear un nuevo ticket de soporte.
@@ -58,7 +59,9 @@ GET http://localhost:8080/api/users — Listar usuarios del sistema.
 
 Estructura del Proyecto
 
+```text
 helpdesk/
 ├── backend/          # Código fuente de la API REST (Spring Boot)
 ├── db/               # Scripts DDL para PostgreSQL (schema.sql)
 └── docs/             # Documentación, capturas e informe (.pdf)
+```
