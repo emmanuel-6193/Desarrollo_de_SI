@@ -3,9 +3,9 @@ FROM maven:3.8.5-openjdk-17 AS build
 WORKDIR /app
 COPY . .
 
-# Entramos a la carpeta backend donde está tu pom.xml
 WORKDIR /app/backend
-RUN mvn clean package -DskipTests
+# Forzamos codificación UTF-8 para evitar errores de compilación
+RUN mvn clean package -DskipTests -Dfile.encoding=UTF-8
 
 # Fase 2: Ejecutar la aplicación
 FROM eclipse-temurin:17-jre-alpine
