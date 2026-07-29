@@ -1,14 +1,13 @@
-# Fase 1: Compilar la aplicación Spring Boot
-FROM maven:3.8.5-openjdk-17 AS build
+# Fase 1: Compilar la aplicación Spring Boot con Java 21
+FROM maven:3.9.6-eclipse-temurin-21 AS build
 WORKDIR /app
 COPY . .
 
 WORKDIR /app/backend
-# Forzamos codificación UTF-8 para evitar errores de compilación
-RUN mvn clean package -DskipTests -Dfile.encoding=UTF-8
+RUN mvn clean package -DskipTests
 
-# Fase 2: Ejecutar la aplicación
-FROM eclipse-temurin:17-jre-alpine
+# Fase 2: Ejecutar la aplicación con Java 21
+FROM eclipse-temurin:21-jre-alpine
 WORKDIR /app
 COPY --from=build /app/backend/target/*.jar app.jar
 EXPOSE 8080
