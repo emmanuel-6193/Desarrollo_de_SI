@@ -56,4 +56,20 @@ public class GestorIncidentesService {
         }
         return null;
     }
+
+    // 4. NUEVO: Resolver un ticket por ID
+    public Ticket resolverTicket(Long id) {
+        for (Ticket ticket : listaTickets) {
+            if (ticket.getId().equals(id)) {
+                ticket.setEstado(Estado.RESUELTO);
+                return ticket;
+            }
+        }
+        return null;
+    }
+
+    // 5. NUEVO: Eliminar un ticket por ID
+    public boolean eliminarTicket(Long id) {
+        return listaTickets.removeIf(ticket -> ticket.getId().equals(id));
+    }
 }

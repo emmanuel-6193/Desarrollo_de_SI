@@ -7,7 +7,7 @@
     <style>
         * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body { background-color: #f4f6f9; margin: 0; padding: 20px; color: #333; }
-        .container { max-width: 1000px; margin: 0 auto; }
+        .container { max-width: 1050px; margin: 0 auto; }
         header { background: #1e293b; color: white; padding: 20px; border-radius: 8px; margin-bottom: 20px; }
         header h1 { margin: 0; font-size: 24px; }
         header p { margin: 5px 0 0 0; color: #94a3b8; font-size: 14px; }
@@ -31,9 +31,15 @@
         .badge { padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 600; color: white; }
         .badge-abierto { background: #ef4444; }
         .badge-proceso { background: #f59e0b; }
+        .badge-resuelto { background: #10b981; }
         
-        .btn-assign { background: #0d9488; font-size: 12px; padding: 6px 10px; margin-right: 4px; }
+        .btn-action { font-size: 12px; padding: 6px 10px; margin-right: 4px; border-radius: 4px; border: none; cursor: pointer; color: white; }
+        .btn-assign { background: #0d9488; }
         .btn-assign:hover { background: #0f766e; }
+        .btn-resolve { background: #10b981; }
+        .btn-resolve:hover { background: #059669; }
+        .btn-delete { background: #ef4444; }
+        .btn-delete:hover { background: #dc2626; }
     </style>
 </head>
 <body>
@@ -89,7 +95,7 @@
         </form>
     </div>
 
-    <!-- TABLA DE TICKETS (SINGLETON & OBSERVER) -->
+    <!-- TABLA DE TICKETS -->
     <div class="card">
         <h2>📋 Tickets Registrados</h2>
         <table>
@@ -100,7 +106,7 @@
                     <th>Prioridad</th>
                     <th>Estado</th>
                     <th>Técnico Asignado</th>
-                    <th>Acción (Observer)</th>
+                    <th>Acciones</th>
                 </tr>
             </thead>
             <tbody id="tablaTickets">
@@ -135,6 +141,11 @@
 
             data.forEach(t => {
                 const tr = document.createElement('tr');
+                
+                let badgeClass = 'badge-abierto';
+                if (t.estado === 'EN_PROCESO') badgeClass = 'badge-proceso';
+                if (t.estado === 'RESUELTO' || t.estado === 'SOLUCIONADO') badgeClass = 'badge-resuelto';
+
                 tr.innerHTML = `
                     <td><strong>#${t.id}</strong></td>
                     <td>
@@ -143,16 +154,22 @@
                     </td>
                     <td>${t.prioridad}</td>
                     <td>
-                        <span class="badge ${t.estado === 'ABIERTO' ? 'badge-abierto' : 'badge-proceso'}">
+                        <span class="badge ${badgeClass}">
                             ${t.estado}
                         </span>
                     </td>
                     <td>${t.tecnicoAsignado || '<em>Sin asignar</em>'}</td>
                     <td>
                         ${t.estado === 'ABIERTO' ? `
-                            <button class="btn-assign" onclick="asignar(${t.id}, 'Tecnico_Redes')">Asignar Redes</button>
-                            <button class="btn-assign" onclick="asignar(${t.id}, 'Tecnico_Software')">Asignar Software</button>
-                        ` : '<span style="color:#10b981; font-size:12px; font-weight:bold;">✓ Notificado</span>'}
+                            <button class="btn-action btn-assign" onclick="asignar(${t.id}, 'Tecnico_Redes')">Asignar Redes</button>
+                            <button class="btn-action btn-assign" onclick="asignar(${t.id}, 'Tecnico_Software')">Asignar Software</button>
+                        ` : ''}
+                        
+                        ${t.estado === 'EN_PROCESO' ? `
+                            <button class="btn-action btn-resolve" onclick="resolver(${t.id})">✔ Resolver</button>
+                        ` : ''}
+
+                        <button class="btn-action btn-delete" onclick="eliminarTicket(${t.id})">🗑️ Borrar</button>
                     </td>
                 `;
                 tbody.appendChild(tr);
@@ -183,6 +200,18 @@
     async function asignar(id, tecnico) {
         await fetch(`${API_URL}/${id}/asignar?tecnico=${tecnico}`, { method: 'PUT' });
         cargarTickets();
+    }
+
+    async function resolver(id) {
+        await fetch(`${API_URL}/${id}/resolver`, { method: 'PUT' });
+        cargarTickets();
+    }
+
+    async function eliminarTicket(id) {
+        if (confirm(`¿Estás seguro de que deseas eliminar el ticket #${id}?`)) {
+            await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
+            cargarTickets();
+        }
     }
 
     // Cargar al iniciar

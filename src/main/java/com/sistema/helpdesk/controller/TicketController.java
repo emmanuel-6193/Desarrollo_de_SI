@@ -14,13 +14,13 @@ public class TicketController {
     // Utiliza el Singleton del Gestor de Incidentes
     private final GestorIncidentesService gestorService = GestorIncidentesService.getInstance();
 
-    // GET: Obtener todos los tickets creados mediante la fábrica
+    // GET: Obtener todos los tickets
     @GetMapping
     public List<Ticket> obtenerTodos() {
         return gestorService.obtenerTodos();
     }
 
-    // POST: Crear un nuevo ticket (dispara el patrón Factory Method)
+    // POST: Crear un nuevo ticket (Factory Method)
     @PostMapping
     public ResponseEntity<Ticket> crearTicket(
             @RequestParam String tipo,
@@ -44,12 +44,32 @@ public class TicketController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    // PUT: Asignar un técnico a un ticket (dispara el patrón Observer)
+    // PUT: Asignar un técnico (Observer)
     @PutMapping("/{id}/asignar")
     public ResponseEntity<Ticket> asignarTecnico(@PathVariable Long id, @RequestParam String tecnico) {
         Ticket actualizado = gestorService.asignarTecnico(id, tecnico);
         if (actualizado != null) {
             return ResponseEntity.ok(actualizado);
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    // PUT: Resolver/Solucionar un ticket
+    @PutMapping("/{id}/resolver")
+    public ResponseEntity<Ticket> resolverTicket(@PathVariable Long id) {
+        Ticket resuelto = gestorService.resolverTicket(id);
+        if (resuelto != null) {
+            return ResponseEntity.ok(resuelto);
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    // DELETE: Eliminar un ticket por ID
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> eliminarTicket(@PathVariable Long id) {
+        boolean eliminado = gestorService.eliminarTicket(id);
+        if (eliminado) {
+            return ResponseEntity.noContent().build();
         }
         return ResponseEntity.notFound().build();
     }
