@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help Desk - Panel SPA</title>
+    <style>
+        * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #f4f6f9; margin: 0; padding: 20px; color: #333; }
+        .container { max-width: 1000px; margin: 0 auto; }
+        header { background: #1e293b; color: white; padding: 20px; border-radius: 8px; margin-bottom: 20px; }
+        header h1 { margin: 0; font-size: 24px; }
+        header p { margin: 5px 0 0 0; color: #94a3b8; font-size: 14px; }
+        
+        .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); margin-bottom: 20px; }
+        .card h2 { margin-top: 0; font-size: 18px; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; }
+        
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .full-width { grid-column: span 2; }
+        
+        label { display: block; font-weight: 600; margin-bottom: 5px; font-size: 14px; }
+        input, select, textarea { width: 100%; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; }
+        
+        button { background: #2563eb; color: white; border: none; padding: 10px 16px; border-radius: 6px; cursor: pointer; font-weight: 600; }
+        button:hover { background: #1d4ed8; }
+        
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { text-align: left; padding: 12px; border-bottom: 1px solid #e2e8f0; font-size: 14px; }
+        th { background: #f8fafc; font-weight: 600; }
+        
+        .badge { padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 600; color: white; }
+        .badge-abierto { background: #ef4444; }
+        .badge-proceso { background: #f59e0b; }
+        
+        .btn-assign { background: #0d9488; font-size: 12px; padding: 6px 10px; margin-right: 4px; }
+        .btn-assign:hover { background: #0f766e; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>🛠️ Panel de Gestión Help Desk (SPA)</h1>
+        <p>Demostración de Patrones: Factory Method, Singleton y Observer</p>
+    </header>
+
+    <!-- FORMULARIO DE CREACIÓN (FACTORY METHOD) -->
+    <div class="card">
+        <h2>➕ Reportar Nuevo Incidente</h2>
+        <form id="ticketForm" class="form-grid">
+            <div>
+                <label>Tipo de Ticket (Factory Pattern):</label>
+                <select id="tipo" onchange="cambiarCampoExtra()">
+                    <option value="RED">Red (TicketRed)</option>
+                    <option value="SOFTWARE">Software (TicketSoftware)</option>
+                </select>
+            </div>
+            <div>
+                <label>Título:</label>
+                <input type="text" id="titulo" placeholder="Ej. Falla en el Router Principal" required>
+            </div>
+            <div>
+                <label>Categoría:</label>
+                <select id="categoria">
+                    <option value="REDES">Redes</option>
+                    <option value="SOFTWARE">Software</option>
+                    <option value="HARDWARE">Hardware</option>
+                </select>
+            </div>
+            <div>
+                <label>Prioridad:</label>
+                <select id="prioridad">
+                    <option value="BAJA">Baja</option>
+                    <option value="MEDIA" selected>Media</option>
+                    <option value="ALTA">Alta</option>
+                </select>
+            </div>
+            <div class="full-width">
+                <label>Descripción:</label>
+                <textarea id="descripcion" rows="2" placeholder="Detalle la falla reportada..." required></textarea>
+            </div>
+            <div class="full-width">
+                <label id="lblDetalleExtra">Switch / Router Afectado:</label>
+                <input type="text" id="detalleExtra" placeholder="Ej. Switch Piso 2">
+            </div>
+            <div class="full-width">
+                <button type="submit">Crear Ticket mediante Fábrica</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- TABLA DE TICKETS (SINGLETON & OBSERVER) -->
+    <div class="card">
+        <h2>📋 Tickets Registrados</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Título / Detalles</th>
+                    <th>Prioridad</th>
+                    <th>Estado</th>
+                    <th>Técnico Asignado</th>
+                    <th>Acción (Observer)</th>
+                </tr>
+            </thead>
+            <tbody id="tablaTickets">
+                <!-- Se llena dinámicamente -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    const API_URL = '/api/tickets';
+
+    function cambiarCampoExtra() {
+        const tipo = document.getElementById('tipo').value;
+        const lbl = document.getElementById('lblDetalleExtra');
+        const txt = document.getElementById('detalleExtra');
+        if (tipo === 'RED') {
+            lbl.innerText = "Switch / Router Afectado:";
+            txt.placeholder = "Ej. Switch Piso 2";
+        } else {
+            lbl.innerText = "Módulo de Software Afectado:";
+            txt.placeholder = "Ej. Módulo de Facturación";
+        }
+    }
+
+    async function cargarTickets() {
+        try {
+            const res = await fetch(API_URL);
+            const data = await res.json();
+            const tbody = document.getElementById('tablaTickets');
+            tbody.innerHTML = '';
+
+            data.forEach(t => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><strong>#${t.id}</strong></td>
+                    <td>
+                        <strong>${t.titulo}</strong><br>
+                        <small style="color:#64748b">${t.descripcion}</small>
+                    </td>
+                    <td>${t.prioridad}</td>
+                    <td>
+                        <span class="badge ${t.estado === 'ABIERTO' ? 'badge-abierto' : 'badge-proceso'}">
+                            ${t.estado}
+                        </span>
+                    </td>
+                    <td>${t.tecnicoAsignado || '<em>Sin asignar</em>'}</td>
+                    <td>
+                        ${t.estado === 'ABIERTO' ? `
+                            <button class="btn-assign" onclick="asignar(${t.id}, 'Tecnico_Redes')">Asignar Redes</button>
+                            <button class="btn-assign" onclick="asignar(${t.id}, 'Tecnico_Software')">Asignar Software</button>
+                        ` : '<span style="color:#10b981; font-size:12px; font-weight:bold;">✓ Notificado</span>'}
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        } catch (e) {
+            console.error("Error al cargar tickets:", e);
+        }
+    }
+
+    document.getElementById('ticketForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const params = new URLSearchParams({
+            tipo: document.getElementById('tipo').value,
+            titulo: document.getElementById('titulo').value,
+            descripcion: document.getElementById('descripcion').value,
+            categoria: document.getElementById('categoria').value,
+            prioridad: document.getElementById('prioridad').value,
+            detalleExtra: document.getElementById('detalleExtra').value
+        });
+
+        await fetch(`${API_URL}?${params.toString()}`, { method: 'POST' });
+        document.getElementById('titulo').value = '';
+        document.getElementById('descripcion').value = '';
+        document.getElementById('detalleExtra').value = '';
+        cargarTickets();
+    });
+
+    async function asignar(id, tecnico) {
+        await fetch(`${API_URL}/${id}/asignar?tecnico=${tecnico}`, { method: 'PUT' });
+        cargarTickets();
+    }
+
+    // Cargar al iniciar
+    cargarTickets();
+</script>
+
+</body>
+</html>
