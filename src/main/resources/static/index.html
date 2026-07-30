@@ -59,6 +59,7 @@
                 <select id="tipo" onchange="cambiarCampoExtra()">
                     <option value="RED">Red (TicketRed)</option>
                     <option value="SOFTWARE">Software (TicketSoftware)</option>
+                    <option value="HARDWARE">Hardware (TicketHardware)</option>
                 </select>
             </div>
             <div>
@@ -71,6 +72,8 @@
                     <option value="REDES">Redes</option>
                     <option value="SOFTWARE">Software</option>
                     <option value="HARDWARE">Hardware</option>
+                    <option value="ACCESOS">Accesos</option>
+                    <option value="OTROS">Otros</option>
                 </select>
             </div>
             <div>
@@ -123,12 +126,16 @@
         const tipo = document.getElementById('tipo').value;
         const lbl = document.getElementById('lblDetalleExtra');
         const txt = document.getElementById('detalleExtra');
+
         if (tipo === 'RED') {
             lbl.innerText = "Switch / Router Afectado:";
             txt.placeholder = "Ej. Switch Piso 2";
-        } else {
+        } else if (tipo === 'SOFTWARE') {
             lbl.innerText = "Módulo de Software Afectado:";
             txt.placeholder = "Ej. Módulo de Facturación";
+        } else if (tipo === 'HARDWARE') {
+            lbl.innerText = "Dispositivo / Periférico Afectado:";
+            txt.placeholder = "Ej. Impresora HP LaserJet / Teclado";
         }
     }
 

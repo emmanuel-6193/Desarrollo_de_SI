@@ -14,7 +14,10 @@ public class TicketFactory {
             return new TicketRed(titulo, descripcion, categoria, prioridad, detalleExtra);
         } else if ("SOFTWARE".equalsIgnoreCase(tipo)) {
             return new TicketSoftware(titulo, descripcion, categoria, prioridad, detalleExtra);
+        } else if ("HARDWARE".equalsIgnoreCase(tipo)) {
+            return new TicketHardware(titulo, descripcion, categoria, prioridad, detalleExtra);
         }
+        
         throw new IllegalArgumentException("Tipo de ticket no soportado: " + tipo);
     }
 }
